@@ -1,5 +1,7 @@
 entorno = "dev"
-prefijo_nombre = "web-dev-01"
-puerto_frontend = 5001
-puerto_backend = 5002
-puerto_db = 5003
+nombre_web = "dev"
+nombre_api = "api"
+nombre_db = "db"
+puerto_web = 4001
+puerto_api = 4002
+puerto_db = 4003

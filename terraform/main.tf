@@ -1,56 +1,58 @@
-resource "docker_network" "app_network"{
-    name = "network-${var.entorno}"
+resource "docker_network" "network"{
+        name    =       "red1"
 }
 
-resource "docker_image" "frontend_img"{
-    name = "frontend-img-${var.entorno}"
-    build{
-        context = "../app/frontend"
-        dockerfile = "Dockerfile.frontend"
-    }
+resource "docker_image" "web-image"{
+        name    =       "${var.nombre_web}"
+        build{
+                context         =       "../src/back"
+                dockerfile      =       "Dockerfile"
+        }
 }
-resource "docker_image" "backend_img"{
-    name= "backend-img-${var.entorno}"
-    build{
-        context = "../app/backend"
-        dockerfile = "Dockerfile.backend"
-    }
+resource "docker_image" "api-image"{
+        name    =       "${var.nombre_api}"
+        build{
+                context         =       "../src/api"
+                dockerfile      =       "Dockerfile"
+        }
 }
 
-resource "docker_container" "frontend"{
-    name= var.prefijo_nombre
-    image = docker_image.frontend_img.image_id
-    ports {
-        internal = 80
-        external = var.puerto_frontend
-    }
-    networks_advanced {
-        name = docker_network.app_network.name
-    }
+
+resource "docker_container" "web-image"{
+        name    =       "${var.nom re_web}-${var.entorno}"
+        image   =       docker_image.web-image.image_id
+        ports{
+                internal        =       80
+                external        =       var.puerto_web
+        }
+        networks_advanced{
+                name    =       docker_network.network.name
+        }
 }
-resource "docker_container" "backend"{
-    name = "api01-${var.entorno}"
-    image = docker_image.backend_img.image_id
-    ports{
-        internal = 4002
-        external = var.puerto_backend
-    }
-    networks_advanced{
-        name = docker_network.app_network.name
-    }
+resource "docker_container" "api-image"{
+        name    =       "${var.nombre_api}-${var.entorno}"
+        image   =       docker_image.api-image.image_id
+        ports{
+                internal        =       3000
+                external        =       var.puerto_api
+        }
+        networks_advanced{
+                name    =       docker_network.network.name
+        }
 }
-resource "docker_container" "db"{
-    name = "db01-${var.entorno}"
-    image = "mysql:8.0"
-    env = [
-        "MYSQL_ROOT_PASSWORD=rootpassword",
-        "MYSQL_DATABASE=mi_db"
-    ]
-    ports{
-        internal = 3306
-        external = var.puerto_db
-    }
-    networks_advanced{
-        name = docker_network.app_network.name
-    }
+resource "docker_container" "db-image"{
+        name    =       "${var.nombre_db}-${var.entorno}"
+        image   =       "postgres:latest"
+        env = [
+                "POSTGRES_USER=userr",
+                "POSTGRES_PASSWORD=p4ssword",
+                "POSTGRES_DB=infra"
+        ]
+        ports{
+                internal        =       5432
+                external        =       var.puerto_db
+        }
+        networks_advanced{
+                name    =       docker_network.network.name
+        }
 }

@@ -2,15 +2,22 @@ variable "entorno" {
   type        = string
   description = "Nombre del entorno (localhost o dev)"
 }
-variable "prefijo_nombre" {
+variable "nombre_web" {
   type        = string
-  description = "Prefijo para los nombres de los contenedores"
+  description = "nombre_web"
 }
-
-variable "puerto_frontend" {
+variable "nombre_api" {
+  type        = string
+  description = "nombre_api"
+}
+variable "nombre_db" {
+  type        = string
+  description = "nombre_db"
+}
+variable "puerto_web" {
   type        = number
 }
-variable "puerto_backend" {
+variable "puerto_api" {
   type = number
 }
 
