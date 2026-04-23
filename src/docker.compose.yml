@@ -1,0 +1,35 @@
+services:
+  frontend:
+    container_name: Frontend
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    networks:
+      - app-network
+    ports:
+    - "4001:80"
+  
+  backend:
+    container_name: Backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.backend
+    networks:
+      - app-network
+    ports:
+      - "4002:3000"
+
+  database:
+    container_name: db
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mi_db
+    networks:
+      - app-network
+    ports:
+      - "4003:3306"
+
+networks:
+  app-network:
+    driver: bridge
