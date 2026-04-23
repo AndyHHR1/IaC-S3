@@ -1,0 +1,11 @@
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+.terraform/
+*.tfvars
+!example.tfvars
+*.log
+.DS_Store
+.vscode/
+.idea/
+.docker/
