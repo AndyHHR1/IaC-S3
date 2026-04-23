@@ -1,12 +1,10 @@
-FROM node:alpine
+FROM node:18-slim
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY . .
+COPY server.js .
 
-EXPOSE 3000
-
-CMD ["node", "index.js"]
+CMD ["node", "server.js"]
 
 # docker build -t lab/api .
 # docker run -p 3000:3000 lab/api
